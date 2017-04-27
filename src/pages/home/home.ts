@@ -1,12 +1,13 @@
 import {Component} from '@angular/core';
-import {NavController} from 'ionic-angular';
-import {SignupComponent} from "../signup/signup.component";
+import {NavController, Platform} from 'ionic-angular';
 import {UserService} from "../../app/services/user.service";
 import {PrivateHomeComponent} from "../private-home/private-home.component";
 import {User} from "../../app/model/user";
 import {CommonPage} from "../commonPage";
 import {EventsService} from "../../app/services/event.service";
 import {ToastController} from 'ionic-angular';
+import {TranslateService} from '@ngx-translate/core';
+import {ENV} from "../../config/environment.dev";
 
 @Component({
     selector: 'page-home',
@@ -16,8 +17,12 @@ export class HomePage extends CommonPage {
     user = new User();
 
     constructor(public navCtrl: NavController, public eventsService: EventsService, private userService: UserService,
-                public toastCtrl: ToastController) {
-        super(navCtrl, eventsService);
+                public toastCtrl: ToastController, translate: TranslateService, public plt: Platform) {
+        super(navCtrl, eventsService, translate, plt);
+
+        if(localStorage.getItem('currentUser')) {
+            this.navCtrl.push(PrivateHomeComponent, {});
+        }
     }
 
     login() {
@@ -44,7 +49,8 @@ export class HomePage extends CommonPage {
         });
     }
 
-    register() {
-        this.navCtrl.push(SignupComponent, {});
+    getLink(path: string) {
+        return ENV.API_URL + (path? '/' + path : '');
     }
+
 }

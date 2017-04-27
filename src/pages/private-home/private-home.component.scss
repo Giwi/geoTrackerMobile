@@ -1,0 +1,8 @@
+app-private-home {
+  .tab-button-icon {
+    color: color($colors, danger) !important;
+  }
+  .tab-button-text {
+    color: color($colors, light);
+  }
+}
