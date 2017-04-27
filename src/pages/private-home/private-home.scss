@@ -5,4 +5,10 @@ app-private-home {
   .tab-button-text {
     color: color($colors, light);
   }
+  .tab-button[aria-selected=true] {
+    background-color: color($colors, light);
+    .tab-button-text {
+      color: color($colors, dark);
+    }
+  }
 }

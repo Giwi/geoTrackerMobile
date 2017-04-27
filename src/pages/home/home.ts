@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {NavController, Platform} from 'ionic-angular';
+import {NavController} from 'ionic-angular';
 import {UserService} from "../../app/services/user.service";
-import {PrivateHomeComponent} from "../private-home/private-home.component";
+import {PrivateHome} from "../private-home/private-home";
 import {User} from "../../app/model/user";
 import {CommonPage} from "../commonPage";
 import {EventsService} from "../../app/services/event.service";
@@ -16,30 +16,31 @@ import {ENV} from "../../config/environment.dev";
 export class HomePage extends CommonPage {
     user = new User();
 
-    constructor(public navCtrl: NavController, public eventsService: EventsService, private userService: UserService,
-                public toastCtrl: ToastController, translate: TranslateService, public plt: Platform) {
-        super(navCtrl, eventsService, translate, plt);
+    constructor(navCtrl: NavController, eventsService: EventsService, translate: TranslateService,
+                public userService: UserService, public toastCtrl: ToastController) {
+        super(navCtrl, eventsService, translate);
 
-        if(localStorage.getItem('currentUser')) {
-            this.navCtrl.push(PrivateHomeComponent, {});
+        if (localStorage.getItem('currentUser')) {
+            this.getCurrentUser(false);
         }
+    }
+
+    private getCurrentUser(showToast: boolean) {
+        this.userService.getCurrentUser().subscribe(result => {
+            if (showToast) {
+                this.toastCtrl.create({
+                    message: 'Login ok',
+                    duration: 3000, position: 'top'
+                }).present();
+            }
+            this.navCtrl.push(PrivateHome, {'user': result});
+        });
     }
 
     login() {
         this.userService.login(this.user).subscribe(result => {
             if (result === true) {
-                this.userService.getCurrentUser().subscribe(result => {
-                    this.toastCtrl.create({
-                        message: 'Login ok',
-                        duration: 3000, position: 'top'
-                    }).present();
-                    this.navCtrl.push(PrivateHomeComponent, {});
-                }, error => {
-                    this.toastCtrl.create({
-                        message: 'Mauvais couple login/mot de passe',
-                        duration: 3000, position: 'top'
-                    }).present();
-                });
+                this.getCurrentUser(true);
             }
         }, error => {
             this.toastCtrl.create({
@@ -50,7 +51,7 @@ export class HomePage extends CommonPage {
     }
 
     getLink(path: string) {
-        return ENV.API_URL + (path? '/' + path : '');
+        return ENV.API_URL + (path ? '/' + path : '');
     }
 
 }

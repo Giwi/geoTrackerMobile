@@ -8,14 +8,16 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {MyApp} from './app.component';
 import {HomePage} from '../pages/home/home';
 import {Http, HttpModule} from "@angular/http";
-import {PrivateHomeComponent} from "../pages/private-home/private-home.component";
+import {PrivateHome} from "../pages/private-home/private-home";
 import {ApiService} from "./services/api.service";
 import {UserService} from "./services/user.service";
 import {AuthenticationService} from "./services/authentication.service";
 import {AuthGuard} from "./guards/auth.guard";
 import {EventsService} from "./services/event.service";
 import {ParamService} from "./services/param.service";
-import {Hello} from "../pages/hello/hello";
+import {Alert} from "../pages/alert/alert";
+import {Tracking} from "../pages/tracking/tracking";
+import {Settings} from "../pages/settings/settings";
 
 export function createTranslateLoader(http: Http) {
     return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -25,8 +27,10 @@ export function createTranslateLoader(http: Http) {
     declarations: [
         MyApp,
         HomePage,
-        PrivateHomeComponent,
-        Hello
+        PrivateHome,
+        Alert,
+        Tracking,
+        Settings
     ],
     imports: [
         BrowserModule,
@@ -44,8 +48,10 @@ export function createTranslateLoader(http: Http) {
     entryComponents: [
         MyApp,
         HomePage,
-        PrivateHomeComponent,
-        Hello
+        PrivateHome,
+        Alert,
+        Tracking,
+        Settings
     ],
     providers: [
         StatusBar,

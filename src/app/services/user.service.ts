@@ -16,9 +16,19 @@ import {ToastController} from "ionic-angular";
 @Injectable()
 export class UserService extends ApiService {
 
+    private _user: User;
+
     constructor(public toastCtrl: ToastController, public authenticationService: AuthenticationService,
                 public eventsService: EventsService, public http: Http) {
         super(toastCtrl, authenticationService, eventsService);
+    }
+
+    get user(): User {
+        return this._user;
+    }
+
+    set user(value: User) {
+        this._user = value;
     }
 
     /**

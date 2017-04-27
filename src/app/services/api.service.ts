@@ -35,7 +35,7 @@ export class ApiService {
                 message: 'You can not access this area',
                 duration: 3000, position: 'top'
             }).present();
-            this.eventsService.broadcast('nav:PrivateHomeComponent');
+            this.eventsService.broadcast('nav:PrivateHome');
             return;
         }
         let errMsg = (error.message) ? error.message : error.status ? error.statusText : 'Server error';
