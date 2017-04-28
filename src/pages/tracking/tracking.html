@@ -9,5 +9,45 @@
 
 
 <ion-content padding>
-
+  <p *ngIf="coords">
+    <aol-map>
+      <aol-view [zoom]="18">
+        <aol-coordinate [x]="coords.longitude" [y]="coords.latitude" [srid]="'EPSG:4326'"></aol-coordinate>
+      </aol-view>
+      <aol-layer-tile>
+        <aol-source-osm></aol-source-osm>
+      </aol-layer-tile>
+      <aol-layer-vector [opacity]="opacity">
+        <aol-source-vector>
+          <!-- <aol-feature>
+             <aol-geometry-point>
+               <aol-coordinate [x]="coords.longitude" [y]="coords.latitude" [srid]="'EPSG:4326'"></aol-coordinate>
+             </aol-geometry-point>
+             <aol-style>
+               <aol-style-circle [radius]="10">
+                 <aol-style-stroke [color]="'black'"></aol-style-stroke>
+                 <aol-style-fill [color]="'green'"></aol-style-fill>
+               </aol-style-circle>
+             </aol-style>
+           </aol-feature>-->
+          <aol-feature>
+            <aol-geometry-point>
+              <aol-coordinate [x]="coords.longitude" [y]="coords.latitude" [srid]="'EPSG:4326'"></aol-coordinate>
+            </aol-geometry-point>
+            <aol-style>
+              <aol-style-icon
+                      [src]="'./assets/marker.png'"
+                      [anchor]="[0,0]"
+                      [anchorXUnits]="'fraction'" [anchorYUnits]="'fraction'"
+                      [scale]="1"
+                      [anchorOrigin]="'top-left'">
+              </aol-style-icon>
+            </aol-style>
+          </aol-feature>
+        </aol-source-vector>
+      </aol-layer-vector>
+    </aol-map>
+    Longitude : {{coords.longitude}}<br />
+    Latitude : {{coords.latitude}}
+  </p>
 </ion-content>

@@ -12,5 +12,4 @@ export class Alert {
     constructor(userService: UserService) {
         this.user = userService.user;
     }
-
 }
